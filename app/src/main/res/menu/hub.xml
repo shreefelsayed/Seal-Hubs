@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/recived"
+        android:icon="@drawable/ic_to_send"
+        android:title="ارسال" />
+    <item
+        android:id="@+id/delivered"
+        android:icon="@drawable/ic_vespa"
+        android:title="تسليم" />
+    <item
+        android:id="@+id/denied"
+        android:icon="@drawable/ic_decline"
+        android:title="مرتجعات" />
+</menu>

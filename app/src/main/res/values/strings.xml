@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">Envio Hubs</string>
+
+    <string-array name="array_hubs">
+        <item>مخزن فيصل</item>
+    </string-array>
+
+    <string-array name="arrayCities">
+        <item>الجيزة, أوسيم</item>
+        <item>الجيزة, إمبابة</item>
+        <item>الجيزة, الدقى</item>
+        <item>الجيزة, الرماية</item>
+        <item>الجيزة, الصحفيين</item>
+        <item>الجيزة, العجوزة</item>
+        <item>الجيزة, العزيزية</item>
+        <item>الجيزة, العمرانية</item>
+        <item>الجيزة, القرية الفرعونية</item>
+        <item>الجيزة, الكيت كات</item>
+        <item>الجيزة, المنيب</item>
+        <item>الجيزة, المهندسين</item>
+        <item>الجيزة, الهرم</item>
+        <item>الجيزة, الوراق</item>
+        <item>الجيزة, بشتيل</item>
+        <item>الجيزة, بولاق الدكرور</item>
+        <item>الجيزة, ترسا</item>
+        <item>الجيزة, حدائق الاهرام</item>
+        <item>الجيزة, حى الجيزة</item>
+        <item>الجيزة, دهشور</item>
+        <item>الجيزة, ساقية مكى</item>
+        <item>الجيزة, سقارة</item>
+        <item>الجيزة, صفط</item>
+        <item>الجيزة, فيصل</item>
+        <item>الجيزة, كرداسة</item>
+        <item>الجيزة, كفر طهرمس</item>
+        <item>الجيزة, مريوطية</item>
+        <item>الجيزة, ميت عقبة</item>
+        <item>الجيزة, ناهيا</item>
+        <item>الجيزة, اكتوبر - المنطقة الصناعية</item>
+        <item>الجيزة, اكتوبر- الاحياء</item>
+        <item>الجيزة, أكتوبر - منطقة الحصري</item>
+        <item>الجيزة, اكتوبر - المتميز والسياحية</item>
+        <item>الجيزة, اكتوبر - مدينة الشيخ زايد</item>
+        <item>الجيزة, الشيخ زايد- الاحياء</item>
+        <item>الجيزة, مدينة الخمايل</item>
+        <item>الجيزة, طريق الواحات</item>
+        <item>الجيزة, مدينة الفردوس</item>
+        <item>الجيزة, دريم لاند</item>
+        <item>الجيزة, حى الاشجار</item>
+        <item>الجيزة, مدينة الانتاج الاعلامى</item>
+        <item>الجيزة, هرم سيتى</item>
+        <item>الجيزة, القرية الذكية</item>
+        <item>الجيزة, ابورواش الصناعية</item>
+        <item>الجيزة, الطريق الصحراوي الى ال كيلو 28</item>
+        <item>الجيزة, البدرشين</item>
+        <item>الجيزة, البراجيل</item>
+        <item>الجيزة, الحوامدية</item>
+        <item>الجيزة, الصف</item>
+        <item>الجيزة, المنصورية</item>
+        <item>الجيزة, جزيرة الدهب وكولدير</item>
+        <item>القاهرة, الحلمية</item>
+        <item>القاهرة, الزمالك</item>
+        <item>القاهرة, الزيتون</item>
+        <item>القاهرة, الساحل</item>
+        <item>القاهرة, السيدة زينب</item>
+        <item>القاهرة, العباسية</item>
+        <item>القاهرة, المرج</item>
+        <item>القاهرة, المطرية</item>
+        <item>القاهرة, المعادي</item>
+        <item>القاهرة, المقطم</item>
+        <item>القاهرة, المنيل</item>
+        <item>القاهرة, النزهة</item>
+        <item>القاهرة, الوايلي</item>
+        <item>القاهرة, حدائق القبة</item>
+        <item>القاهرة, دار السلام</item>
+        <item>القاهرة, زهراء المعادى</item>
+        <item>القاهرة, شبرا</item>
+        <item>القاهرة, شيراتون</item>
+        <item>القاهرة, عزبة النخل</item>
+        <item>القاهرة, عين شمس</item>
+        <item>القاهرة, قصر النيل</item>
+        <item>القاهرة, مدينة السلام</item>
+        <item>القاهرة, مدينة نصر</item>
+        <item>القاهرة, مصر الجديدة</item>
+        <item>القاهرة, وسط البلد</item>
+        <item>القاهرة, التجمع الأول</item>
+        <item>القاهرة, التجمع الثالث</item>
+        <item>القاهرة, التجمع الخامس</item>
+        <item>القاهرة, مدينة الرحاب</item>
+        <item>القاهرة, حدائق حلوان</item>
+        <item>القاهرة, حلوان</item>
+        <item>القاهرة, مدينة 15 مايو</item>
+        <item>القاهرة, مدينة الشروق</item>
+        <item>القاهرة, مدينة بدر</item>
+        <item>القاهرة, مدينتي</item>
+        <item>القاهرة, العاصمة الإدارية الجديدة</item>
+        <item>القليوبية, بهتيم</item>
+        <item>القليوبية, شبرا الخيمة</item>
+        <item>القليوبية, مدينة العبور</item>
+    </string-array>
+
+
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="title_activity_maps">Map</string>
+</resources>

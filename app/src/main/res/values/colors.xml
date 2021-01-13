@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF808080</color>
+    <color name="colorPrimaryDark">#050505</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBack">#FFFFFF</color>
+    <color name="red_500">#FF0000</color>
+    <color name="yellow">#FF5714</color>
+    <color name="background">#FFFFFF</color>
+
+
+    <!-- colors for tab and screent text -->
+
+
+</resources>
