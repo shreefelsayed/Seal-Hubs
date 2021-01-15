@@ -1,6 +1,7 @@
 package com.armjld.enviohubs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,11 @@ public class HubAdapter extends RecyclerView.Adapter<HubAdapter.MyViewHolder> {
         holder.setState(orderData.getStatue());
         holder.setProvider(orderData.getProvider());
         holder.setWhereTo(orderData);
+
+        holder.btnInfo.setOnClickListener(v-> {
+            OrderInfo.orderData = orderData;
+            mContext.startActivity(new Intent(mContext, OrderInfo.class));
+        });
 
     }
 

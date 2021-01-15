@@ -15,7 +15,6 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
@@ -24,11 +23,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EnvioHubs"
         tools:ignore="AllowBackup,LockedOrientationActivity">
+        <activity android:name=".OrderInfo"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
 
         <activity
             android:name=".MapsActivity"
@@ -38,16 +37,13 @@
         <activity android:name=".Login.Login_Options" />
         <activity android:name=".Login.LoadingScreen" />
         <activity android:name=".HubHome.MainActivity" />
-
-
         <activity android:name=".Login.StartUp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
             android:launchMode="standard"

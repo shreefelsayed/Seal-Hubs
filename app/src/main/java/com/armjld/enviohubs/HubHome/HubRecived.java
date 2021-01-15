@@ -1,8 +1,11 @@
 package com.armjld.enviohubs.HubHome;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,8 +84,12 @@ public class HubRecived extends Fragment {
         txtCount = view.findViewById(R.id.txtCount);
 
         btnQR.setOnClickListener(v -> {
-            Intent i = new Intent(mContext, QRScanner.class);
-            mContext.startActivity(i);
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_DENIED) {
+                Intent i = new Intent(mContext, QRScanner.class);
+                mContext.startActivity(i);
+            } else {
+                ActivityCompat.requestPermissions((Activity) mContext, new String[] {Manifest.permission.CAMERA}, 80);
+            }
         });
 
         btnFilters.setOnClickListener(v -> {

@@ -41,8 +41,6 @@ public class OrdersClass {
 
         mDatabase.child(orderData.getId()).child("uAccepted").setValue("");
 
-        // -- Add Money to User
-
         // -- Toast
         Toast.makeText(mContext, "تم استلام الشحنه", Toast.LENGTH_SHORT).show();
 
@@ -125,10 +123,6 @@ public class OrdersClass {
         // --- Get Refrence
         getRefrence ref = new getRefrence();
         DatabaseReference mDatabase = ref.getRef(orderData.getProvider());
-
-        // --- Add Money to Delv Denied
-        Wallet wallet = new Wallet();
-        wallet.addDeniedMoney(orderData.getuAccepted());
 
         // ---- Update Database Childs
         if (orderData.getpHub().equals(UserInFormation.getSup_code())) {
