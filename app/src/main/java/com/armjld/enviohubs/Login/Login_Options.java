@@ -20,7 +20,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -139,10 +138,7 @@ public class Login_Options extends AppCompatActivity {
                         String email = Objects.requireNonNull(user.child("email").getValue()).toString();
                         String realPass = Objects.requireNonNull(user.child("mpass").getValue()).toString();
                         if (!mpass.equals(realPass)) {
-                            MaterialDialog materialDialog = new MaterialDialog.Builder(Login_Options.this).setTitle("فشل في تسجيل الدخول").setMessage("تأكد من البريد الالكتروني و كلمة المرور الخاصة بك").setCancelable(true).setPositiveButton("حاول مجددا", (dialogInterface, which) -> dialogInterface.dismiss()).setNegativeButton("استرداد كلمة السر", (dialogInterface, which) -> {
-                                dialogInterface.dismiss();
-                            }).build();
-                            materialDialog.show();
+                            Toast.makeText(Login_Options.this, "تأكد من بيانات الحساب", Toast.LENGTH_SHORT).show();
                             mdialog.dismiss();
                         } else {
                             login(email, mpass);
@@ -182,10 +178,7 @@ public class Login_Options extends AppCompatActivity {
                 _lgnMn.setMyInfo(Login_Options.this);
             } else {
                 mdialog.dismiss();
-                MaterialDialog materialDialog = new MaterialDialog.Builder(Login_Options.this).setTitle("فشل في تسجيل الدخول").setMessage("تأكد من البريد الالكتروني و كلمة المرور الخاصة بك").setCancelable(true).setPositiveButton("حاول مجددا", (dialogInterface, which) -> dialogInterface.dismiss()).setNegativeButton("استرداد كلمة السر", (dialogInterface, which) -> {
-                    dialogInterface.dismiss();
-                }).build();
-                materialDialog.show();
+                Toast.makeText(this, "فشل في تسجيل الدخول", Toast.LENGTH_SHORT).show();
             }
         });
     }

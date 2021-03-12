@@ -58,7 +58,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -138,11 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void buildAlertMessageNoGps() {
-        BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(com.armjld.enviohubs.MapsActivity.this).setMessage("الرجاء فتح اعدادات اللوكيشن ؟").setCancelable(true).setPositiveButton("حسنا", R.drawable.ic_tick_green, (dialogInterface, which) -> {
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            dialogInterface.dismiss();
-        }).setNegativeButton("لا", R.drawable.ic_close, (dialogInterface, which) -> dialogInterface.dismiss()).setAnimation(R.raw.location).build();
-        mBottomSheetDialog.show();
+        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
 
     private void fetchLocation() {

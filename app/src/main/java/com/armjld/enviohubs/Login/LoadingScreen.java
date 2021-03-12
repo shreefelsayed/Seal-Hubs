@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Collections;
+
 
 public class LoadingScreen extends AppCompatActivity {
 
@@ -50,40 +52,10 @@ public class LoadingScreen extends AppCompatActivity {
     //  ------- Get Recived Orders -------------- \\
     private void getRecived() {
         getRefrence ref = new getRefrence();
-        DatabaseReference mDatabase = ref.getRef("Esh7nly");
-
-        MainActivity.listRecived.clear();
-        MainActivity.listRecived.trimToSize();
-
-        mDatabase.orderByChild("pHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Data orderData = ds.getValue(Data.class);
-
-                        // ---- Check if order state if it should be here in this tab
-                        assert orderData != null;
-                        if (orderData.getStatue().equals("hubP") || orderData.getStatue().equals("hub1Denied")) {
-                            // ------ Add Order to Recived List
-                            MainActivity.listRecived.add(orderData);
-                        }
-                    }
-                }
-
-                getProviderRecived();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
-    private void getProviderRecived() {
-        getRefrence ref = new getRefrence();
         DatabaseReference mDatabase = ref.getRef("Raya");
 
+        MainActivity.listRecived.clear();
+
         mDatabase.orderByChild("pHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,15 +65,16 @@ public class LoadingScreen extends AppCompatActivity {
 
                         // ---- Check if order state if it should be here in this tab
                         assert orderData != null;
-                        if (orderData.getStatue().equals("hubP") || orderData.getStatue().equals("hub1Denied")) {
+                        if (orderData.getStatue().equals("hubP")) {
                             // ------ Add Order to Recived List
                             MainActivity.listRecived.add(orderData);
                         }
                     }
+                    Collections.sort(MainActivity.listRecived, (lhs, rhs) -> rhs.getDDate().compareTo(lhs.getDDate()));
+
                 }
 
                 getDelv();
-
             }
 
             @Override
@@ -113,45 +86,11 @@ public class LoadingScreen extends AppCompatActivity {
 
     private void getDelv() {
         getRefrence ref = new getRefrence();
-        DatabaseReference mDatabase = ref.getRef("Esh7nly");
-
-        MainActivity.listDelv.clear();
-        MainActivity.listDelv.trimToSize();
-
-        MainActivity.listDenied.clear();
-        MainActivity.listDenied.trimToSize();
-
-        mDatabase.orderByChild("dHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Data orderData = ds.getValue(Data.class);
-
-                        // ---- Check if order state if it should be here in this tab
-                        assert orderData != null;
-                        if (orderData.getStatue().equals("hubD") || orderData.getStatue().equals("hub2Denied")) {
-                            // ------ Add Order to Recived List
-                            MainActivity.listDelv.add(orderData);
-                        } else if (orderData.getStatue().equals("deniedD")) {
-                            MainActivity.listDenied.add(orderData);
-                        }
-                    }
-                }
-
-                getProviderDelv();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
-    private void getProviderDelv() {
-        getRefrence ref = new getRefrence();
         DatabaseReference mDatabase = ref.getRef("Raya");
 
+        MainActivity.listDelv.clear();
+        MainActivity.listDenied.clear();
+
         mDatabase.orderByChild("dHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -168,9 +107,14 @@ public class LoadingScreen extends AppCompatActivity {
                             MainActivity.listDenied.add(orderData);
                         }
                     }
+
+                    Collections.sort(MainActivity.listDelv, (lhs, rhs) -> rhs.getDDate().compareTo(lhs.getDDate()));
+                    Collections.sort(MainActivity.listDenied, (lhs, rhs) -> rhs.getDDate().compareTo(lhs.getDDate()));
+
                 }
 
                 whatToDo();
+
             }
 
             @Override
@@ -178,7 +122,6 @@ public class LoadingScreen extends AppCompatActivity {
             }
         });
     }
-
 
     private void whatToDo() {
         startActivity(new Intent(this, MainActivity.class));

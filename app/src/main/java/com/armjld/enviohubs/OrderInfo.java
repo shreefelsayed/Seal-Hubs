@@ -1,10 +1,5 @@
 package com.armjld.enviohubs;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,13 +9,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.armjld.enviohubs.models.Data;
 import com.google.firebase.database.DataSnapshot;
@@ -28,15 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import static com.google.firebase.database.FirebaseDatabase.getInstance;
@@ -50,7 +43,7 @@ public class OrderInfo extends AppCompatActivity {
     TextView date3, date, orderto, OrderFrom, txtPack, txtWeight, ordercash2, txtState, txtPostDate2;
     TextView dsUsername , txtOnwerPhone;
     TextView dsPAddress, dsDAddress, txtCallCustomer, txtCustomerName;
-    ImageView supPP, btnOrderMap;
+    ImageView supPP;
     ImageView btnClose;
     TextView txtNotes;
     LinearLayout linSupplier;
@@ -76,12 +69,12 @@ public class OrderInfo extends AppCompatActivity {
         nDatabase = getInstance().getReference().child("Pickly").child("notificationRequests");
 
         btnClose = findViewById(R.id.btnClose);
-        btnOrderMap = findViewById(R.id.btnOrderMap);
 
         // -- Reciver
         txtCustomerName = findViewById(R.id.txtCustomerName);
         txtCallCustomer = findViewById(R.id.txtCallCustomer);
         dsDAddress = findViewById(R.id.dsDAddress);
+
         // -- Package
         date = findViewById(R.id.date);
         orderto = findViewById(R.id.orderto);
@@ -92,6 +85,7 @@ public class OrderInfo extends AppCompatActivity {
         txtState = findViewById(R.id.fees2);
         txtPostDate2 = findViewById(R.id.txtPostDate2);
         date3 = findViewById(R.id.date3);
+
         // --- Supplier
         linSupplier = findViewById(R.id.linSupplier);
         txtOnwerPhone = findViewById(R.id.txtOnwerPhone);
@@ -115,8 +109,11 @@ public class OrderInfo extends AppCompatActivity {
 
         txtCallCustomer.setOnClickListener(v -> {
             if (dPhone.equals("")) return;
-            BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(OrderInfo.this).setMessage("هل تريد الاتصال بالعميل ؟").setCancelable(true).setPositiveButton("نعم", R.drawable.ic_add_phone, (dialogInterface, which) -> {
 
+            AlertDialog alertDialog = new AlertDialog.Builder(OrderInfo.this).create();
+            alertDialog.setTitle("إتصال");
+            alertDialog.setMessage("هل تريد الاتصال بالعميل ؟");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "اتصال", (dialog, which) ->  {
                 checkPermission(Manifest.permission.CALL_PHONE, PHONE_CALL_CODE);
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + dPhone));
@@ -124,16 +121,21 @@ public class OrderInfo extends AppCompatActivity {
                     return;
                 }
                 startActivity(callIntent);
-
-                dialogInterface.dismiss();
-            }).setNegativeButton("لا", R.drawable.ic_close, (dialogInterface, which) -> dialogInterface.dismiss()).build();
-            mBottomSheetDialog.show();
+                dialog.dismiss();
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "لا", (dialog, which) ->  {
+                dialog.dismiss();
+            });
+            alertDialog.show();
         });
 
         txtOnwerPhone.setOnClickListener(v -> {
             if (ownerPhone.equals("")) return;
-            BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(OrderInfo.this).setMessage("هل تريد الاتصال بالراسل ؟").setCancelable(true).setPositiveButton("نعم", R.drawable.ic_add_phone, (dialogInterface, which) -> {
 
+            AlertDialog alertDialog = new AlertDialog.Builder(OrderInfo.this).create();
+            alertDialog.setTitle("إتصال");
+            alertDialog.setMessage("هل تريد الاتصال بالراسل ؟");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "اتصال", (dialog, which) ->  {
                 checkPermission(Manifest.permission.CALL_PHONE, PHONE_CALL_CODE);
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + ownerPhone));
@@ -141,10 +143,12 @@ public class OrderInfo extends AppCompatActivity {
                     return;
                 }
                 startActivity(callIntent);
-
-                dialogInterface.dismiss();
-            }).setNegativeButton("لا", R.drawable.ic_close, (dialogInterface, which) -> dialogInterface.dismiss()).build();
-            mBottomSheetDialog.show();
+                dialog.dismiss();
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "لا", (dialog, which) ->  {
+                dialog.dismiss();
+            });
+            alertDialog.show();
         });
 
         setData();

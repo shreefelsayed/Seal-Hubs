@@ -121,8 +121,10 @@ public class QRScanner extends BaseScannerActivity implements ZXingScannerView.R
 
                         // ---- Send the action to Class
                         switch (statue) {
+                            case "placed":
+                            case "accepted":
+                            case "recived":
                             case "recived2":  // Recive order from PickUp Captin
-
                                 if (!orderData.getpHub().equals(UserInFormation.getSup_code())) {
                                     Toast.makeText(QRScanner.this, "تم استلام الشحنه لكن هذه الشحنه لا ينبغي ان يتم تسليمها لك", Toast.LENGTH_LONG).show();
                                 }
@@ -134,6 +136,13 @@ public class QRScanner extends BaseScannerActivity implements ZXingScannerView.R
                                 }
 
                                 break;
+                            case "hubP":
+                                if(orderData.getpHub().equals(UserInFormation.getSup_code()) && orderData.getdHub().equals(UserInFormation.getSup_code())) {
+                                    ordersClass.recSameAction(orderData);
+                                } else {
+                                    ordersClass.recFromHub(orderData);
+                                }
+                                break;
                             case "hub1Denied":  // if i am getting a returned order from another HUB
                                 ordersClass.incomeDeniedAction(orderData);
                                 break;
@@ -141,7 +150,7 @@ public class QRScanner extends BaseScannerActivity implements ZXingScannerView.R
                                 ordersClass.denied(orderData);
                                 break;
                             default:  // ---- Order Statue isn't valid to make this action ..
-                                Toast.makeText(QRScanner.this, "Something Wrong with the Package", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QRScanner.this, "لا يمكنك تسجيل اي اكشن علي هذه الشحنه", Toast.LENGTH_SHORT).show();
                                 break;
                         }
 

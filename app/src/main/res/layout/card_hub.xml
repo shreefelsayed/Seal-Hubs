@@ -156,7 +156,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnInfo"
+            android:id="@+id/btnDeliver"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
             android:layout_alignParentTop="false"
@@ -165,12 +165,52 @@
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_weight="0.5"
-            android:background="@drawable/btn_bad_square"
-
-            android:text="المزيد من البيانات"
-            android:textColor="#000000"
+            android:background="@drawable/btn_defult_square"
+            android:text="تم توصيل الشحنه"
+            android:textColor="@color/colorWhite"
             android:textSize="@dimen/_12sdp"
             android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/linButton1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnInfo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_alignParentTop="false"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_bad_square"
+
+                android:text="المزيد من البيانات"
+                android:textColor="#000000"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDenied"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_alignParentTop="false"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_bad_square"
+
+                android:text="ارجاع الشحنه"
+                android:textColor="#000000"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="visible" />
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -26,7 +26,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 @SuppressLint("SimpleDateFormat")
 public class MainActivity extends AppCompatActivity {
@@ -38,165 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Data> listRecived = new ArrayList<>();
     public static ArrayList<Data> listDelv = new ArrayList<>();
     public static ArrayList<Data> listDenied = new ArrayList<>();
-    @SuppressLint("NonConstantResourceId")
-    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
-        Fragment fragment = null;
-        String fragTag = "";
-        switch (item.getItemId()) {
-            case R.id.recived: {
-                fragment = new HubRecived();
-                fragTag = "Received";
-                break;
-            }
-
-            case R.id.delivered: {
-                fragment = new HubDelivered();
-                fragTag = "Delivered";
-                break;
-            }
-
-            case R.id.denied: {
-                fragment = new HubDenied();
-                fragTag = "Denied";
-                break;
-            }
-        }
-        assert fragment != null;
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, fragTag).addToBackStack("Received").commit();
-        return true;
-    };
     boolean doubleBackToExitPressedOnce = false;
-
-    public static void getRecived() {
-        getRefrence ref = new getRefrence();
-        DatabaseReference mDatabase = ref.getRef("Esh7nly");
-
-        listRecived.clear();
-        listRecived.trimToSize();
-
-        mDatabase.orderByChild("pHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Data orderData = ds.getValue(Data.class);
-
-                        // ---- Check if order state if it should be here in this tab
-                        assert orderData != null;
-                        if (orderData.getStatue().equals("hubP") || orderData.getStatue().equals("hub1Denied")) {
-                            // ------ Add Order to Recived List
-                            listRecived.add(orderData);
-                        }
-                    }
-                }
-
-                getProviderRecived();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
-    private static void getProviderRecived() {
-        getRefrence ref = new getRefrence();
-        DatabaseReference mDatabase = ref.getRef("Raya");
-
-        mDatabase.orderByChild("pHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Data orderData = ds.getValue(Data.class);
-
-                        // ---- Check if order state if it should be here in this tab
-                        assert orderData != null;
-                        if (orderData.getStatue().equals("hubP") || orderData.getStatue().equals("hub1Denied")) {
-                            // ------ Add Order to Recived List
-                            listRecived.add(orderData);
-                        }
-                    }
-                }
-
-                HubRecived.getOrders();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
-    public static void getDelv() {
-        getRefrence ref = new getRefrence();
-        DatabaseReference mDatabase = ref.getRef("Esh7nly");
-
-        listDelv.clear();
-        listDelv.trimToSize();
-
-        listDenied.clear();
-        listDenied.trimToSize();
-
-        mDatabase.orderByChild("dHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Data orderData = ds.getValue(Data.class);
-
-                        // ---- Check if order state if it should be here in this tab
-                        assert orderData != null;
-                        if (orderData.getStatue().equals("hubD") || orderData.getStatue().equals("hub2Denied")) {
-                            // ------ Add Order to Recived List
-                            listDelv.add(orderData);
-                        } else if (orderData.getStatue().equals("deniedD")) {
-                            listDenied.add(orderData);
-                        }
-                    }
-                }
-
-                getProviderDelv();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
-    private static void getProviderDelv() {
-        getRefrence ref = new getRefrence();
-        DatabaseReference mDatabase = ref.getRef("Raya");
-
-        mDatabase.orderByChild("dHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        Data orderData = ds.getValue(Data.class);
-
-                        // ---- Check if order state if it should be here in this tab
-                        assert orderData != null;
-                        if (orderData.getStatue().equals("hubD") || orderData.getStatue().equals("hub2Denied")) {
-                            // ------ Add Order to Recived List
-                            listDelv.add(orderData);
-                        } else if (orderData.getStatue().equals("deniedD")) {
-                            listDenied.add(orderData);
-                        }
-                    }
-                }
-
-                HubDelivered.getOrders();
-                HubDenied.getOrders();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 
     @Override
     public void onBackPressed() {
@@ -217,14 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!LoginManager.dataset) {
-            finish();
-            startActivity(new Intent(this, StartUp.class));
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +82,88 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, whichFrag(), whichFrag).addToBackStack("Received").commit();
 
         checkForCamera();
+    }
+
+    public static void getRecived() {
+        listRecived.clear(); // --- Clear
+
+        getRefrence ref = new getRefrence();
+        DatabaseReference mDatabase = ref.getRef("Raya");
+
+        mDatabase.orderByChild("pHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Data orderData = ds.getValue(Data.class);
+
+                        // ---- Check if order state if it should be here in this tab
+                        assert orderData != null;
+                        if (orderData.getStatue().equals("hubP")) {
+                            // ------ Add Order to Recived List
+                            listRecived.add(orderData);
+                        }
+                    }
+                }
+
+                Collections.sort(listRecived, (lhs, rhs) -> rhs.getDDate().compareTo(lhs.getDDate()));
+
+                HubRecived.getOrders();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public static void getDelv() {
+
+        listDelv.clear();
+        listDenied.clear();
+
+        getRefrence ref = new getRefrence();
+        DatabaseReference mDatabase = ref.getRef("Raya");
+
+        mDatabase.orderByChild("dHub").equalTo(UserInFormation.getSup_code()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Data orderData = ds.getValue(Data.class);
+
+                        // ---- Check if order state if it should be here in this tab
+                        assert orderData != null;
+                        if (orderData.getStatue().equals("hubD") || orderData.getStatue().equals("hub2Denied")) {
+                            // ------ Add Order to Recived List
+                            listDelv.add(orderData);
+                        } else if (orderData.getStatue().equals("deniedD")) {
+                            listDenied.add(orderData);
+                        }
+                    }
+
+                    Collections.sort(listDelv, (lhs, rhs) -> rhs.getDDate().compareTo(lhs.getDDate()));
+                    Collections.sort(listDenied, (lhs, rhs) -> rhs.getDDate().compareTo(lhs.getDDate()));
+
+                    HubDelivered.getOrders();
+                    HubDenied.getOrders();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!LoginManager.dataset) {
+            finish();
+            startActivity(new Intent(this, StartUp.class));
+        }
     }
 
     private void checkForCamera() {
@@ -270,8 +192,48 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
+            case "Settings": {
+                frag = new Settings();
+                bottomNavigationView.setSelectedItemId(R.id.settings);
+                break;
+            }
+
         }
         return frag;
     }
+
+    @SuppressLint("NonConstantResourceId")
+    private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = item -> {
+        Fragment fragment = null;
+        String fragTag = "";
+        switch (item.getItemId()) {
+            case R.id.recived: {
+                fragment = new HubRecived();
+                fragTag = "Received";
+                break;
+            }
+
+            case R.id.delivered: {
+                fragment = new HubDelivered();
+                fragTag = "Delivered";
+                break;
+            }
+
+            case R.id.denied: {
+                fragment = new HubDenied();
+                fragTag = "Denied";
+                break;
+            }
+
+            case R.id.settings: {
+                fragment = new Settings();
+                fragTag = "Settings";
+                break;
+            }
+        }
+        assert fragment != null;
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, fragTag).addToBackStack("Received").commit();
+        return true;
+    };
 
 }

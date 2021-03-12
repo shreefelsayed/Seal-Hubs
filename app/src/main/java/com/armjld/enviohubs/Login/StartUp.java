@@ -1,5 +1,6 @@
 package com.armjld.enviohubs.Login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.armjld.enviohubs.R;
@@ -19,12 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import timber.log.Timber;
 
 public class StartUp extends AppCompatActivity {
 
@@ -66,7 +65,6 @@ public class StartUp extends AppCompatActivity {
         assert pInfo != null;
         String version = pInfo.versionName;
         double dVersion = Double.parseDouble(version);
-        Timber.i("Current Version : %s", dVersion);
 
         // -------------- Check for Updates --------------- //
         FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
@@ -82,23 +80,30 @@ public class StartUp extends AppCompatActivity {
                     if (dVersion >= lastVersion) {
                         whatToDo();
                     } else {
-                        MaterialDialog materialDialog = new MaterialDialog.Builder(StartUp.this).setTitle("يوجد تحديث جديد").setMessage("هل ترغب في التحديث الأن ؟").setCancelable(false).setPositiveButton("تحديث الان", (dialogInterface, which) -> {
-                            openWebURL("https://play.google.com/store/apps/details?id=com.armjld.enviohubs");
-                            dialogInterface.dismiss();
-                            finish();
-                        }).setNegativeButton("لاحقا", (dialogInterface, which) -> {
-                            dialogInterface.dismiss();
-                            whatToDo();
-                        }).build();
-                        materialDialog.show();
+                        AlertDialog alertDialog = new AlertDialog.Builder(StartUp.this).create();
+                        alertDialog.setTitle("تحديث");
+                        alertDialog.setMessage("يوجد تحديث جديد للتطبيق");
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "تحديث", (dialog, which) ->  {
+                                    openWebURL("https://play.google.com/store/apps/details?id=com.armjld.enviohubs");
+                                    finish();
+                                    dialog.dismiss();
+                        });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "لاحقا", (dialog, which) ->  {
+                            dialog.dismiss();
+                        });
+                        alertDialog.show();
                     }
                 } else {
-                    MaterialDialog materialDialog = new MaterialDialog.Builder(StartUp.this).setTitle("يوجد تحديث جديد").setMessage("متوفر الأن تحديث جديد للبرنامج, يجب تحديث البرنامج للاستمرار").setCancelable(false).setPositiveButton("تحديث", (dialogInterface, which) -> {
+                    AlertDialog alertDialog = new AlertDialog.Builder(StartUp.this).create();
+                    alertDialog.setTitle("تحديث");
+                    alertDialog.setCancelable(false);
+                    alertDialog.setMessage("يوجد تحديث جديد للتطبيق");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "تحديث", (dialog, which) ->  {
                         openWebURL("https://play.google.com/store/apps/details?id=com.armjld.enviohubs");
-                        dialogInterface.dismiss();
                         finish();
-                    }).build();
-                    materialDialog.show();
+                        dialog.dismiss();
+                    });
+                    alertDialog.show();
                 }
             }
         });

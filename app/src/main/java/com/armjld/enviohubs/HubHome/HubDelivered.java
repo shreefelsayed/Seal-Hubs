@@ -42,8 +42,7 @@ public class HubDelivered extends Fragment {
     static LinearLayout EmptyPanel;
 
 
-    public HubDelivered() {
-    }
+    public HubDelivered() { }
 
     public static void getOrders() {
         filterList = MainActivity.listDelv;
@@ -51,6 +50,7 @@ public class HubDelivered extends Fragment {
         if (mContext != null) {
             hubAdapter = new HubAdapter(mContext, filterList);
         }
+
         if (recyclerView != null) {
             recyclerView.setAdapter(hubAdapter);
             updateNone(filterList.size());
